@@ -1,0 +1,38 @@
+.form {
+  margin: 0 auto;
+}
+.form .form-heading,
+.form .checkbox {
+  margin-bottom: 20px;
+}
+.form .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form .form-control:focus {
+  z-index: 2;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.center {
+  margin: 0 auto;
+  position: relative;
+  max-width: 800px;
+}
+
+.note {
+  font-size: 12px;
+  color: #767676;
+  margin-top: 5px;
+}
+body {
+  background-color: #eee;
+}

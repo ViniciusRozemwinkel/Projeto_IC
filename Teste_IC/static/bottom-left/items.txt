@@ -1,0 +1,19 @@
+18
+0 2 2 5 25 Description of triangle
+1 1 1 10 5 1 Description of rectangle
+2 3 1 10 1 Description of circle
+3 3 2 2 1 Description of circle
+4 2 12 2 1 triangle
+5 2 2 5 1 Description of triangle
+6 1 1 10 5 1 Description of rectangle
+7 3 1 10 1 Description of circle
+8 3 2 2 1 Description of circle
+9 2 2 5 1 Description of triangle
+10 1 1 10 5 1 Description of rectangle
+11 3 1 10 1 Description of circle
+12 3 2 2 1 Description of circle
+13 2 12 2 1 triangle
+14 2 2 5 1 Description of triangle
+15 1 1 10 5 1 Description of rectangle
+16 3 1 10 1 Description of circle
+17 3 2 2 1 Description of circle

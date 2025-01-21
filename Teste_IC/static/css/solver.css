@@ -1,0 +1,128 @@
+.colorful {
+    /*background-color: #cdcdcd;*/
+    border: 1px solid #000;
+}
+
+#kiln{
+    min-height: 80px;
+    height: 15%;
+    min-width: 600px;
+}
+
+#content {
+    height: 85%;
+    min-width: 600px;
+}
+
+html, body {
+    height: 100%;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+#savedItemsScroll li{
+    min-height: 70px;
+    /*background-color: #cdcdcd;*/
+    margin: 15px 0;
+    list-style: none;
+    padding: 0 10px;
+}
+
+#savedItemsScroll {
+    padding: 0;
+}        
+
+#listOfItems > tbody td, #listOfItems > thead th {
+    /*float: left;*/
+    vertical-align: middle;
+}
+
+#listOfItems > thead, #listOfItems > tbody, #listOfItems > tr, #listOfItems > td, #listOfItems > th { 
+    display: block; 
+} 
+
+#listOfItems > thead > tr:after, #listOfItems > tbody > tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+#listOfItems > thead th {
+    height: 30px;
+}
+
+#listOfItems > tbody {
+    /* Firefox */
+    height: -moz-calc(100% - 38px);
+    /* WebKit */
+    height: -webkit-calc(100% - 38px);
+    /* Opera */
+    height: -o-calc(100% - 38px);
+    /* Standard */
+    height: calc(100% - 38px);
+    
+    overflow-y: auto;
+    padding-bottom:10px;
+}
+
+.tab-content {
+    /* Firefox */
+    height: -moz-calc(100% - 45px);
+    /* WebKit */
+    height: -webkit-calc(100% - 45px);
+    /* Opera */
+    height: -o-calc(100% - 45px);
+    /* Standard */
+    height: calc(100% - 45px);
+
+    border-left: #ddd 1px solid;
+    border-right: #ddd 1px solid;
+    border-bottom: #ddd 1px solid;
+
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-bottom-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-bottom-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+}
+
+#modalNewKiln .modal-dialog { 
+    width: 400px; 
+}
+
+.item-description {
+    margin:auto; 
+    padding-bottom: 5px;
+    display:table;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.item-icon {
+    margin: 5px;
+    margin-left: 10px;
+    width: 25px;
+
+}
+
+.item-dimensions {
+    display: block;
+    padding-top: 10px;
+    font-size: 13px;
+}
+
+#savedItemsScroll li button{
+    width:100%; 
+    padding:5px;
+}
+

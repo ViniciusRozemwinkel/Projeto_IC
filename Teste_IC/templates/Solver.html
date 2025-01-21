@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solver - Gestão de Cerâmica</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 70px;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .left-menu, .right-menu {
+            width: 20%;
+            min-width: 200px;
+        }
+
+        .center-content {
+            flex-grow: 1;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .fullWidth {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">TCC</a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+                <ul class="nav navbar-nav">
+                    <li><a href="#">Instruções</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Solver</a></li>
+                    <li><a href="#">Projetos</a></li>
+                    <li><a href="#">Fornos</a></li>
+                    <li><a href="item">Itens</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Left Menu -->
+        <div class="left-menu">
+            <h3>Adicionar Peça</h3>
+            <form id="add-item-form">
+                <div class="form-group">
+                    <label>Tipo</label>
+                    <div class="btn-group btn-group-toggle fullWidth" data-toggle="buttons">
+                        <label class="btn btn-default active">
+                            <input type="radio" name="itemType" value="1" checked> <img src="static/images/rectangle32.png" />
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="itemType" value="4"> <img src="static/images/square32.png" />
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="itemType" value="3"> <img src="static/images/circle32.png" />
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="itemType" value="2"> <img src="static/images/triangle32.png" />
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Descrição</label>
+                    <input type="text" class="form-control" name="description" placeholder="Descrição">
+                </div>
+
+                <div class="form-group">
+                    <label>Dimensões</label>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name="length" placeholder="Comprimento">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name="width" placeholder="Profundidade">
+                        </div>
+                        <div class="col-xs-4">
+                            <input type="text" class="form-control" name="height" placeholder="Altura">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Adicionar Item</button>
+            </form>
+        </div>
+
+        <!-- Center Content -->
+        <div class="center-content">
+            <h3>Itens Adicionados</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Dimensões</th>
+                        <th>Remover</th>
+                    </tr>
+                </thead>
+                <tbody id="item-list">
+                    <tr>
+                        <td colspan="4">Nenhum item adicionado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Right Menu -->
+        <div class="right-menu">
+            <h3>Catálogo e Forno</h3>
+            <input type="file" id="catalog-upload" class="form-control" accept=".txt" style="display: none;" onchange="handleFileUpload(event)">
+            <button class="btn btn-success btn-block" onclick="document.getElementById('catalog-upload').click()">Carregar Catálogo</button>
+            <button class="btn btn-secondary btn-block" onclick="downloadCatalog()">Baixar Catálogo</button>
+            <hr>
+            <button class="btn btn-primary btn-block" onclick="openCreateKilnModal()">Criar Forno</button>
+        </div>
+    </div>
+
+    <!-- Create Kiln Modal -->
+    <div class="modal fade" id="createKilnModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Criar Forno</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="create-kiln-form">
+                        <div class="form-group">
+                            <label>Descrição</label>
+                            <input type="text" class="form-control" name="description" placeholder="Descrição do Forno">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimensões</label>
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" name="length" placeholder="Comprimento">
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" name="width" placeholder="Largura">
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" class="form-control" name="height" placeholder="Altura">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="createKiln()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Handle adding items
+        document.getElementById('add-item-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const item = {
+                type: formData.get('itemType'),
+                description: formData.get('description'),
+                dimensions: `C: ${formData.get('length')} P: ${formData.get('width')} A: ${formData.get('height')}`,
+            };
+
+            const tableBody = document.getElementById('item-list');
+            if (tableBody.querySelector('td[colspan="4"]')) {
+                tableBody.innerHTML = '';
+            }
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${item.type}</td>
+                <td>${item.description}</td>
+                <td>${item.dimensions}</td>
+                <td><button class="btn btn-danger btn-sm" onclick="removeItem(this)">X</button></td>
+            `;
+            tableBody.appendChild(newRow);
+
+            event.target.reset();
+        });
+
+        // Remove item from list
+        function removeItem(button) {
+            const row = button.closest('tr');
+            row.remove();
+
+            const tableBody = document.getElementById('item-list');
+            if (!tableBody.querySelector('tr')) {
+                tableBody.innerHTML = '<tr><td colspan="4">Nenhum item adicionado</td></tr>';
+            }
+        }
+
+        // Handle file upload
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const content = e.target.result;
+                    const rows = content.split('\n');
+                    const tableBody = document.getElementById('item-list');
+                    tableBody.innerHTML = '';
+
+                    rows.forEach(row => {
+                        const [type, description, dimensions] = row.split(',');
+                        if (type && description && dimensions) {
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `
+                                <td>${type}</td>
+                                <td>${description}</td>
+                                <td>${dimensions}</td>
+                                <td><button class="btn btn-danger btn-sm" onclick="removeItem(this)">X</button></td>
+                            `;
+                            tableBody.appendChild(newRow);
+                        }
+                    });
+                };
+                reader.readAsText(file);
+            }
+        }
+
+        // Download catalog as text file
+        function downloadCatalog() {
+            const tableBody = document.getElementById('item-list');
+            const rows = tableBody.querySelectorAll('tr');
+            let content = '';
+
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 1) {
+                    const type = cells[0].innerText;
+                    const description = cells[1].innerText;
+                    const dimensions = cells[2].innerText;
+                    content += `${type},${description},${dimensions}\n`;
+                }
+            });
+
+            const blob = new Blob([content], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'catalogo.txt';
+            link.click();
+        }
+
+        // Open modal to create kiln
+        function openCreateKilnModal() {
+            $('#createKilnModal').modal('show');
+        }
+
+        // Create kiln logic
+        function createKiln() {
+            const formData = new FormData(document.getElementById('create-kiln-form'));
+            const kiln = {
+                description: formData.get('description'),
+                dimensions: `C: ${formData.get('length')} L: ${formData.get('width')} A: ${formData.get('height')}`
+            };
+            alert(`Forno criado:\nDescrição: ${kiln.description}\nDimensões: ${kiln.dimensions}`);
+            $('#createKilnModal').modal('hide');
+        }
+    </script>
+</body>
+</html>
